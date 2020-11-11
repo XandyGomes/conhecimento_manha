@@ -66,6 +66,28 @@ export default {
 
         display: flex;
         flex-direction: column;
+        flex-wrap: wrap;
+
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s linear;
+    }
+
+    .user-dropdown:hover .user-dropdown-content {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .user-dropdown-content a {
+        text-decoration: none;
+        color: #000;
+        padding: 10px;
+    }
+
+    .user-dropdown-content a:hover {
+        text-decoration: none;
+        color: #000;
+        background-color: #ededed;
     }
 
 </style>
