@@ -4,7 +4,7 @@
           <i class="fa fa-lg" :class="icon"></i>
       </a>
       <h1 class="title">
-          {{ title }}
+          <router-link to="/"> {{ title }} </router-link>
       </h1>
       <UserDropdown v-if="!hideUserDropdown" />
           
@@ -49,11 +49,13 @@ export default {
         font-weight: 100;
         flex-grow: 1;
         text-align: center;
+        
     }
     .title a {
         color: #fff;
         text-decoration: none;
     }
+    
     header.header > a.toggle {
         width: 60px;
         height: 100%;
@@ -68,4 +70,5 @@ export default {
         color:#fff;
         background-color: rgba(0, 0, 0, 0.2);
     }
+    
 </style>
