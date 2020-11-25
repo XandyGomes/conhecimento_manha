@@ -85,7 +85,26 @@ export default {
       axios.get(url).then(res => {
         this.users = res.data
       })
+    },
+    reset(){
+      this.user = {}
+      this.loadUsers()
+    },
+    save() {
+      const method = this.user.id ? 'put' : 'post'
+      const id = this.user.id ? `/${this.user.id}` : ''
+      axios[method](`${baseApiUrl}/users${id}`, this.user)
+        .then(() => {
+          this.$toasted.global.defaultSuccess()
+          this.reset()
+        })
+        .catch(showError)
+    },
+    loadUser(user){
+      this.user = { ...user }
     }
+
+
   },
   mounted(){
     this.loadUsers()
