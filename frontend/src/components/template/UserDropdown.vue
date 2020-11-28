@@ -1,29 +1,37 @@
 <template>
-  <div class="user-dropdown">
-      <div class="user-button">
-          <span class="d-none d-sm-block">{{ user.name }}</span>
-          <div class="user-dropdown-img">
-              <Gravatar :email="user.email" alt="User" />
-          </div>
-          <i class="fa fa-angle-down"></i>
-      </div>
-      <div class="user-dropdown-content">
-          <router-link to="/admin"><i class="fa fa-cogs"></i> Administração</router-link>
-          <a href><i class="fa fa-sign-out"></i> Sair</a>
-      </div>
-  </div>
+    <div class="user-dropdown">
+        <div class="user-button">
+            <span class="d-none d-sm-block">{{ user.name }}</span>
+            <div class="user-dropdown-img">
+                <Gravatar :email="user.email" alt="User" />
+            </div>
+            <i class="fa fa-angle-down"></i>
+        </div>
+        <div class="user-dropdown-content">
+            <router-link to="/admin" v-if="user.admin">
+                <i class="fa fa-cogs"></i> Administração
+            </router-link>
+            <a href @click.prevent="logout"><i class="fa fa-sign-out"></i> Sair</a>
+        </div>
+    </div>
 </template>
 
 <script>
-
+import { userKey } from '@/global'
 import { mapState } from 'vuex'
 import Gravatar from 'vue-gravatar'
 
 export default {
     name: 'UserDropdown',
-    components : { Gravatar },
-    computed: mapState(['user'])
-
+    components: { Gravatar },
+    computed: mapState(['user']),
+    methods: {
+        logout() {
+            localStorage.removeItem(userKey)
+            this.$store.commit('setUser', null)
+            this.$router.push({ name: 'auth' })
+        }
+    }
 }
 </script>
 
@@ -42,8 +50,8 @@ export default {
         padding: 0px 20px;
     }
 
-    .user-button:hover {
-        background-color: rgba(0,0,0,0.2);
+    .user-dropdown:hover {
+        background-color: rgba(0, 0, 0, 0.2);
     }
 
     .user-dropdown-img {
@@ -54,6 +62,7 @@ export default {
         max-height: 37px;
         border-radius: 5px;
     }
+
 
     .user-dropdown-content {
         position: absolute;
@@ -87,7 +96,6 @@ export default {
     .user-dropdown-content a:hover {
         text-decoration: none;
         color: #000;
-        background-color: #ededed;
+        background-color: #EDEDED;
     }
-
 </style>
